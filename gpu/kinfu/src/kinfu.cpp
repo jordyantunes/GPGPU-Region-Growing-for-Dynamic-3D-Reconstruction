@@ -82,6 +82,7 @@ namespace pcl
   }
 }
 
+
 #ifdef RANGA_MODIFICATION
 std::vector<unsigned short> source_depth_data_temp_; // ready for gpu memory , depth map for TSDF (surface reconstruction)
 std::vector<unsigned short> source_depth_data_temp1_; // ready for gpu memory , depth map for ICP (point to planar alignment algorithm)
@@ -90,6 +91,7 @@ PtrStepSz<const unsigned short> depth_temp_;
 char basepath_kinfu[500];
 int bilateral_filter_kinfu = 1;
 int indicator = 0;
+
 
 FILE * fp = NULL; // TSDF -> Refined Depth Map
 FILE * fp_1 = NULL; // ICP -> Raw Depth Map
@@ -152,13 +154,14 @@ pcl::gpu::KinfuTracker::initPath(char * base_path, int indicator_, int bilateral
 {
 	strcpy(basepath_kinfu, base_path);
 
-#ifdef RANGA_MODIFICATION
+#ifdef RANGA_MODIFICATION	
 	// Open the Associate file
 	char icp_str[500],sr_str[500], tsdf_str[500];
 	strcpy(icp_str, basepath_kinfu);
 	strcpy(sr_str, basepath_kinfu);
 
 	int mode = mode_ ;
+
 
 	if (mode == 0) // Bilateral
 	{
@@ -450,6 +453,7 @@ void pcl::gpu::KinfuTracker::loadFile(PtrStepSz<const unsigned short>& depth_tem
 //}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Calls all the functions to compute 
 bool
 pcl::gpu::KinfuTracker::operator() (DepthMap& depth_raw, IndicatorMap& depth_indicator, Eigen::Affine3f *hint)
 {  
@@ -721,6 +725,8 @@ pcl::gpu::KinfuTracker::operator() (DepthMap& depth_raw, IndicatorMap& depth_ind
 }
 
 //////////////////////////////////////////////////////////////////////////////////////// -> original KinfuTracker
+// START HERE, JORDY
+
 bool
 pcl::gpu::KinfuTracker::operator() (DepthMap& depth_raw, Eigen::Affine3f *hint)
 {  
